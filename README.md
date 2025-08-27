@@ -74,3 +74,6 @@ string constant METADATA_URL =
 2. 继承 [CCIP](https://docs.chain.link/ccip) 的合约
 3. 找到 Send Arbitrary Data
 4. 安装 npm install -D @chainlink/contracts-ccip
+5. 创建 NFTPoolBurnAndMint.sol,这个文件的代码跟 NFTPoolLockAndRelease.sol 很像，直接复制，稍作修改即可。
+
+### 多链部署脚本

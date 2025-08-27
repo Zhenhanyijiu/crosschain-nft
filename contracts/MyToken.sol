@@ -27,18 +27,10 @@ contract MyToken is
         string memory tokenSymbol
     ) ERC721(tokenName, tokenSymbol) Ownable(msg.sender) {}
 
-    function safeMint(
-        address to
-    )
-        public
-        // string memory uri
-        onlyOwner
-        returns (uint256)
-    {
+    function safeMint(address to) public {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, METADATA_URL);
-        return tokenId;
     }
 
     // The following functions are overrides required by Solidity.

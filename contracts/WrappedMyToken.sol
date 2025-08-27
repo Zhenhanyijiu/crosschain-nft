@@ -9,6 +9,7 @@ contract WrappedMyToken is MyToken {
     ) MyToken(tokenName, tokenSymbol) {}
 
     function mintTokenWithSpecificTokenId(address to, uint256 tokenId) public {
+        // 真实场景中，这里需要做一些权限控制
         _safeMint(to, tokenId);
     }
 }
