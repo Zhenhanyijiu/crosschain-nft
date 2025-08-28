@@ -11,8 +11,12 @@
   "description": "",
   "devDependencies": {
     "@chainlink/contracts-ccip": "^1.6.0",
+    "@nomicfoundation/hardhat-ethers": "^3.1.0",
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
     "@openzeppelin/contracts": "^5.4.0",
-    "hardhat": "^2.26.3"
+    "ethers": "^6.15.0",
+    "hardhat": "^2.26.3",
+    "hardhat-deploy": "^0.12.4",
+    "hardhat-deploy-ethers": "^0.4.2"
   }
 }

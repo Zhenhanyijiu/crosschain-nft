@@ -77,3 +77,12 @@ string constant METADATA_URL =
 5. 创建 NFTPoolBurnAndMint.sol,这个文件的代码跟 NFTPoolLockAndRelease.sol 很像，直接复制，稍作修改即可。
 
 ### 多链部署脚本
+1. 写部署脚本
+2. 新建 deploy 文件夹
+3. 新建文件 1_deploy_nft.js, 2_deploy_pool_lock_and_release.js, 3_deploy_wnft.js, 4_deploy_pool_burn_and_mint.js
+4. 安装 hardhat-deploy 插件，打开官网，打开 hardhat-deploy 插件，点击installation章节，打开它的GitHub，直接复制命令到终端 npm install --save-dev @nomicfoundation/hardhat-ethers ethers hardhat-deploy hardhat-deploy-ethers，可以在 package.json 里面查看包是否安装成功。并在 hardhat.config.js 中引入这三个包。
+5. 编写部署脚本，参考代码
+
+### chainlink-local 
+这里用到 ChainLink 的本地测试环境，需要 MOCK CCIP 合约
+1. 
