@@ -91,3 +91,6 @@ string constant METADATA_URL =
 4. 编写  3_deploy_wnft.js 部署脚本
 5. 编写  4_deploy_pool_burn_and_mint.js 部署脚本
 6. 部署 npx hardhat deploy
+
+### 写单元测试
+1. npx hardhat test
