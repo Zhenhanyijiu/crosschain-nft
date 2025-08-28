@@ -85,4 +85,9 @@ string constant METADATA_URL =
 
 ### chainlink-local 
 这里用到 ChainLink 的本地测试环境，需要 MOCK CCIP 合约
-1. 
+1. 安装chainlink-local, 可以在GitHub去搜索, npm install @chainlink/local -D
+2. 新建合约 CCIPSimulator.sol, 并引入包
+3. 编写 CCIPSimulator 合约的部署脚本，参考代码，新建 0_deploy_ccip_simulator.js
+4. 编写  3_deploy_wnft.js 部署脚本
+5. 编写  4_deploy_pool_burn_and_mint.js 部署脚本
+6. 部署 npx hardhat deploy
