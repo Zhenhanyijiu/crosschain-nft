@@ -7,7 +7,9 @@ let nft
 let nftPoolLockAndRelease
 let wnft
 let nftPoolBurnAndMint
-beforeEach(async () => {
+let chainSelector
+// 这里使用 before 而非 beforeEach 是因为我们需要在所有测试之前初始化一些变量
+before(async () => {
     // prepare variables :contract,account
     firstAccount = (await getNamedAccounts()).firstAccount
     await deployments.fixture(["all"])
@@ -16,6 +18,8 @@ beforeEach(async () => {
     nftPoolLockAndRelease = await ethers.getContract("NFTPoolLockAndRelease", firstAccount)
     wnft = await ethers.getContract("WrappedMyToken", firstAccount)
     nftPoolBurnAndMint = await ethers.getContract("NFTPoolBurnAndMint", firstAccount)
+    const config = await ccipSimulator.configuration()
+    chainSelector = config.chainSelector_
 })
 
 // source chain => dest chain
@@ -28,15 +32,39 @@ describe("source chain => dest chain", async () => {
         const owner = await nft.ownerOf(0)
         await expect(owner).to.equal(firstAccount)
     })
+    it("test if user can lock the nft in the pool and send ccip msg on source chain", async () => {
+        // lock the nft
+        await nft.approve(nftPoolLockAndRelease.target, 0)
+        await ccipSimulator.requestLinkFromFaucet(
+            nftPoolLockAndRelease, ethers.parseEther("10"))
+        await nftPoolLockAndRelease.lockAndSendNFT(0, firstAccount,
+            chainSelector, nftPoolBurnAndMint.target)
+        const owner = await nft.ownerOf(0)
+        await expect(owner).to.equal(nftPoolLockAndRelease)
+    })
+    it("test if user can get a wrapped nft in the dest chain", async () => {
+        // check if the wnft is minted
+        const owner = await wnft.ownerOf(0)
+        await expect(owner).to.equal(firstAccount)
+    })
 })
-// test if user can mint a nft from nft contract successfully
+describe("dest chain => source chain", async () => {
+    it("test if user can burn the wnft and send ccip message on dest chain", async () => {
+        // burn the wnft
+        await wnft.approve(nftPoolBurnAndMint.target, 0)
+        await ccipSimulator.requestLinkFromFaucet(
+            nftPoolBurnAndMint, ethers.parseEther("10"))
+        await nftPoolBurnAndMint.burnAndSendNFT(0, firstAccount,
+            chainSelector, nftPoolLockAndRelease.target)
+        const totalSupply = await wnft.totalSupply()
+        await expect(totalSupply).to.equal(0)
+    })
+    it("test if user have the nft unlocked on source chain", async () => {
+        const owner = await nft.ownerOf(0)
+        await expect(owner).to.equal(firstAccount)
+    })
+})
 
-// test if user can lock the nft in the pool and send ccip msg on source chain
-
-// test if user can get a wrapped nft in the dest chain
-
-// dest chain => source chain
-// test if user can burn the wnft and send ccip message on dest chain
 
 // test if user have the nft unlocked on source chain
 

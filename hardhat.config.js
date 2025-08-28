@@ -9,5 +9,11 @@ module.exports = {
         firstAccount: {
             default: 0
         }
+    },
+    gasReporter: {
+        enabled: false,
+        // currency: "USD",
+        // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+        // token: "ETH"
     }
 }; 
